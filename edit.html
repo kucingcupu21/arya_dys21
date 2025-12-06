@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Kontak</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Hubungkan script.js -->
+    <script src="asset/scripts/scripts.js" defer></script>
+  </head>
+
+  <body
+    class="min-h-screen py-10 bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-700"
+  >
+    <div
+      class="max-w-xl mx-auto bg-[#1E1B2E]/80 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-purple-600/30"
+    >
+      <h1 class="text-3xl font-bold mb-6 text-center text-white">
+        ✏️ Edit Kontak
+      </h1>
+
+      <!-- FORM EDIT harus id="formEdit" (WAJIB!) -->
+      <form id="formEdit" class="space-y-4">
+        <div>
+          <label class="text-white font-semibold">Nama</label>
+          <input
+            type="text"
+            name="nama"
+            required
+            class="w-full p-3 rounded-lg bg-slate-800 text-white border border-purple-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-white font-semibold">Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full p-3 rounded-lg bg-slate-800 text-white border border-purple-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-white font-semibold">Telepon</label>
+          <input
+            type="text"
+            name="telepon"
+            required
+            class="w-full p-3 rounded-lg bg-slate-800 text-white border border-purple-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-white font-semibold">Alamat</label>
+          <input
+            type="text"
+            name="alamat"
+            required
+            class="w-full p-3 rounded-lg bg-slate-800 text-white border border-purple-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-white font-semibold">Pekerjaan</label>
+          <input
+            type="text"
+            name="pekerjaan"
+            required
+            class="w-full p-3 rounded-lg bg-slate-800 text-white border border-purple-500"
+          />
+        </div>
+
+        <div class="flex justify-between mt-6">
+          <a
+            href="index.html"
+            class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow"
+          >
+            ⬅ Kembali
+          </a>
+
+          <button
+            type="submit"
+            class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow font-semibold"
+          >
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
