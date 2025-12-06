@@ -1,25 +1,21 @@
-// ===============================
-// KONSTANTA LOCAL STORAGE
-// ===============================
+
 const STORAGE_KEY = "contactsData";
 
 
-// Ambil data dari localStorage
+
 function getContacts() {
   const data = localStorage.getItem(STORAGE_KEY);
   return data ? JSON.parse(data) : [];
 }
 
 
-// Simpan data ke localStorage
+
 function saveContacts(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
 
-// ============================
-// RENDER DATA PADA INDEX.HTML
-// ============================
+
 function loadIndexPage() {
   const listContainer = document.getElementById("contactList");
   if (!listContainer) return;
@@ -27,7 +23,7 @@ function loadIndexPage() {
   const contacts = getContacts();
   listContainer.innerHTML = "";
 
-  // Jika data kosong
+
   if (contacts.length === 0) {
     listContainer.innerHTML = `
       <tr>
@@ -39,7 +35,7 @@ function loadIndexPage() {
     return;
   }
 
-  // Render semua data
+
   contacts.forEach(contact => {
     const row = document.createElement("tr");
     row.className = "hover:bg-purple-900/30 transition";
@@ -71,9 +67,7 @@ function loadIndexPage() {
 }
 
 
-// ============================
-// HAPUS KONTAK
-// ============================
+
 function deleteContact(id) {
   const contacts = getContacts();
   const updated = contacts.filter(c => c.id !== id);
@@ -82,17 +76,13 @@ function deleteContact(id) {
 }
 
 
-// ============================
-// PINDAH KE HALAMAN EDIT
-// ============================
+
 function goToEdit(id) {
   window.location.href = `edit.html?id=${id}`;
 }
 
 
-// ============================
-// FORM TAMBAH (tambah.html)
-// ============================
+
 function handleTambahForm() {
   const form = document.getElementById("addForm");
   if (!form) return;
@@ -101,7 +91,7 @@ function handleTambahForm() {
     e.preventDefault();
 
     const newContact = {
-      id: Date.now(), // ID angka
+      id: Date.now(),
       nama: document.getElementById("nama").value,
       email: document.getElementById("email").value,
       phone: document.getElementById("phone").value,
@@ -117,65 +107,60 @@ function handleTambahForm() {
   });
 }
 
-
-// ====================================
-// HALAMAN EDIT KONTAK (edit.html)
-// ====================================
-if (document.getElementById("formEdit")) {
+function loadEditPage() {
   const formEdit = document.getElementById("formEdit");
+  if (!formEdit) return;
 
-  // Ambil ID kontak dari URL
+
+
+
   const urlParams = new URLSearchParams(window.location.search);
-  const contactId = parseInt(urlParams.get("id"));
+  const contactId = urlParams.get("id");
 
-  if (!contactId && contactId !== 0) {
+  if (!contactId) {
     alert("ID kontak tidak ditemukan!");
-  } else {
-    // Ambil list kontak
-    const contacts = getContacts();
-    const contact = contacts[contactId];
-
-    // Cek apakah kontak ada
-    if (!contact) {
-      alert("Kontak tidak ditemukan!");
-      window.location.href = "index.html";
-    }
-
-    // Isi form dengan data kontak
-    formEdit.nama.value = contact.nama;
-    formEdit.email.value = contact.email;
-    formEdit.telepon.value = contact.telepon;
-    formEdit.alamat.value = contact.alamat;
-    formEdit.pekerjaan.value = contact.pekerjaan;
-
-    // Saat form disubmit – UPDATE DATA
-    formEdit.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      // Update value
-      contact.nama = formEdit.nama.value;
-      contact.email = formEdit.email.value;
-      contact.telepon = formEdit.telepon.value;
-      contact.alamat = formEdit.alamat.value;
-      contact.pekerjaan = formEdit.pekerjaan.value;
-
-      // Simpan ke localStorage
-      contacts[contactId] = contact;
-      saveContacts(contacts);
-
-      alert("Kontak berhasil diperbarui!");
-
-      // Redirect ke halaman utama
-      window.location.href = "index.html";
-    });
+    return;
   }
+
+  const contacts = getContacts();
+  const contact = contacts.find(c => c.id == contactId);
+
+  if (!contact) {
+    alert("Kontak tidak ditemukan!");
+    window.location.href = "index.html";
+    return;
+  }
+
+  formEdit.nama.value = contact.nama;
+  formEdit.email.value = contact.email;
+  formEdit.telepon.value = contact.phone;
+  formEdit.alamat.value = contact.alamat;
+  formEdit.pekerjaan.value = contact.pekerjaan;
+
+  formEdit.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    contact.nama = formEdit.nama.value;
+    contact.email = formEdit.email.value;
+    contact.phone = formEdit.telepon.value;
+    contact.alamat = formEdit.alamat.value;
+    contact.pekerjaan = formEdit.pekerjaan.value;
+
+    saveContacts(contacts);
+
+    alert("Kontak berhasil diperbarui!");
+    window.location.href = "index.html";
+  });
 }
 
-// ============================
-// DETEKSI HALAMAN & JALANKAN
-// ============================
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   loadIndexPage();
   handleTambahForm();
   loadEditPage();
 });
+
