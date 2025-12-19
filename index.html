@@ -1,60 +1,20 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Address book</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Hubungkan script.js -->
-    <script src="asset/scripts/scripts.js" defer></script>
+    <title>Address Book</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
+  <body>
+    <main>
+      <h1 class="text-3xl">Address Book</h1>
 
-  <body
-    class="min-h-screen py-10 bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-700"
-  >
-    <div
-      class="max-w-4xl mx-auto bg-[#1E1B2E]/80 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-purple-600/30"
-    >
-      <h1 class="text-3xl font-bold mb-6 text-center text-white">
-        📋 Address book
-      </h1>
+      <ul id="contact-list">
+        <!-- Contacts will be dynamically inserted here -->
+      </ul>
+    </main>
 
-      <!-- Tombol Aksi -->
-      <div class="flex justify-between mb-5">
-        <a
-          href="tambah.html"
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold shadow"
-        >
-          ➕ Tambah Kontak
-        </a>
-
-        <a
-          href="edit.html"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold shadow"
-        >
-          ✏️ Edit Kontak Manual
-        </a>
-      </div>
-
-      <table
-        class="w-full mt-4 text-gray-200 bg-[#1E293B]/40 rounded-lg overflow-hidden shadow"
-      >
-        <thead class="bg-purple-700 text-white">
-          <tr>
-            <th class="p-3 text-left">Nama</th>
-            <th class="p-3 text-left">Email</th>
-            <th class="p-3 text-left">Telepon</th>
-            <th class="p-3 text-left">Alamat</th>
-            <th class="p-3 text-left">Pekerjaan</th>
-            <th class="p-3 text-center">Aksi</th>
-          </tr>
-        </thead>
-
-        <!-- BAGIAN INI AKAN DIISI OLEH loadIndexPage() -->
-        <tbody id="contactList" class="divide-y divide-purple-600/30"></tbody>
-      </table>
-    </div>
+    <script src="/assets/scripts/script.js"></script>
   </body>
 </html>
