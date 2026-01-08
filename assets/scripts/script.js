@@ -1,114 +1,93 @@
-let dataContacts = [
+let dataPemain = [
   {
     id: 1,
-    fullName: "Robert Downey Jr",
-    phone: "628111111111",
-    email: "rdj@marvel.com",
-    location: "New York",
+    namaPemain: "Lionel Messi",
+    nomorPunggung: 10,
+    email: "messi@intermiami.com",
+    klub: "Inter Miami",
   },
   {
     id: 2,
-    fullName: "Chris Evans",
-    phone: "628222222222",
-    email: "cevans@marvel.com",
-    location: "Boston",
+    namaPemain: "Cristiano Ronaldo",
+    nomorPunggung: 7,
+    email: "ronaldo@alnassr.com",
+    klub: "Al Nassr",
   },
   {
     id: 3,
-    fullName: "Scarlett Johansson",
-    phone: "628333333333",
-    email: "sjohansson@marvel.com",
-    location: "Los Angeles",
-  },
-  {
-    id: 4,
-    fullName: "Chris Hemsworth",
-    phone: "628444444444",
-    email: "chemsworth@marvel.com",
-    location: "Sydney",
+    namaPemain: "Kylian Mbappe",
+    nomorPunggung: 7,
+    email: "mbappe@psg.com",
+    klub: "PSG",
   },
 ];
 
-// --- DOM ---
-const contactList = document.getElementById("contact-list");
+const daftarPemain = document.getElementById("daftar-kontak");
+const formPemain = document.getElementById("formKontak");
 
-// --- FUNCTION ---
+formPemain.addEventListener("submit", tambahPemain);
+window.hapusPemain = hapusPemain;
 
-function displayContacts() {
-  const loadContacts = loadFromLocalStorage() || dataContacts;
+function tampilkanPemain() {
+  const data = ambilDariLocalStorage();
+  data === null ? simpanKeLocalStorage(dataPemain) : (dataPemain = data);
 
-  const contactListElement = loadContacts.map((contact) => {
-    return `
-      <li class="border w-lg my-2 rounded-md p-2">
-        <h1>${contact.fullName}</h1>
-        <p>${contact.phone}</p>
-        <p>${contact.email}</p>
-        <p>${contact.location}</p>
+  daftarPemain.innerHTML = dataPemain
+    .map(
+      (pemain) => `
+      <li class="border my-2 rounded-md p-2">
+        <h1>${pemain.namaPemain}</h1>
+        <p>${pemain.nomorPunggung}</p>
+        <p>${pemain.email}</p>
+        <p>${pemain.klub}</p>
+        <button
+          onclick="hapusPemain(${pemain.id})"
+          class="border text-white bg-red-400 rounded-lg px-2 py-1 mt-2"
+        >
+          Hapus
+        </button>
       </li>
-    `;
-  });
-
-  contactList.innerHTML = contactListElement.join("");
+    `
+    )
+    .join("");
 }
 
-function createNewId() {
-  if (dataContacts.length === 0) return 1;
-  return dataContacts[dataContacts.length - 1].id + 1;
+function buatIdPemain() {
+  return dataPemain[dataPemain.length - 1].id + 1;
 }
 
-function addContact(fullName, phone, email, location) {
-  dataContacts.push({
-    id: createNewId(),
-    fullName,
-    phone,
-    email,
-    location,
-  });
-  saveToLocalStorage();
-  displayContacts();
+function tambahPemain(e) {
+  e.preventDefault();
+
+  const formData = new FormData(formPemain);
+
+  const pemainBaru = {
+    id: buatIdPemain(),
+    namaPemain: formData.get("nama"),
+    nomorPunggung: formData.get("nomor"),
+    email: formData.get("email"),
+    klub: formData.get("kota"),
+  };
+
+  dataPemain.push(pemainBaru);
+  simpanKeLocalStorage(dataPemain);
+  tampilkanPemain();
+  formPemain.reset();
 }
 
-function searchContacts(keyword) {
-  const filteredContacts = dataContacts.filter((contact) =>
-    contact.fullName.toLowerCase().includes(keyword.toLowerCase())
-  );
-
-  for (const contact of filteredContacts) {
-    console.log(`
-       🆔 : ${contact.id}
-       🧑‍🦱 : ${contact.fullName}
-       📱 : ${contact.phone}
-       📍 : ${contact.location}
-       ✉️ : ${contact.email}
-    `);
-  }
+function hapusPemain(id) {
+  dataPemain = dataPemain.filter((pemain) => pemain.id !== id);
+  simpanKeLocalStorage(dataPemain);
+  tampilkanPemain();
 }
 
-function deleteContact(id) {
-  dataContacts = dataContacts.filter((contact) => contact.id !== id);
-  saveToLocalStorage();
-  displayContacts();
+function simpanKeLocalStorage(data) {
+  localStorage.setItem("kontak", JSON.stringify(data));
 }
 
-function updateContact(id, newContact) {
-  dataContacts = dataContacts.map((contact) => {
-    if (contact.id === id) {
-      return { ...contact, ...newContact };
-    }
-    return contact;
-  });
-  saveToLocalStorage();
-  displayContacts();
+function ambilDariLocalStorage() {
+  const data = localStorage.getItem("kontak");
+  return data ? JSON.parse(data) : null;
 }
 
-function saveToLocalStorage() {
-  localStorage.setItem("contacts", JSON.stringify(dataContacts));
-}
-
-function loadFromLocalStorage() {
-  const contactsFromStorage = localStorage.getItem("contacts");
-  return contactsFromStorage ? JSON.parse(contactsFromStorage) : null;
-}
-
-// RUN PROGRAM
-displayContacts();
+tampilkanPemain();

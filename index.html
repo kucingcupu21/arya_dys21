@@ -1,18 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Address Book</title>
+    <title>Data Pemain Bola</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
     <main>
-      <h1 class="text-3xl">Address Book</h1>
+      <h1 class="text-3xl">Data Pemain Bola</h1>
 
-      <ul id="contact-list">
-        <!-- Contacts will be dynamically inserted here -->
-      </ul>
+      <div class="grid grid-cols-2">
+        <form class="ms-5 mt-5 space-y-2" id="formKontak">
+          <div class="grid grid-cols-2 w-fit">
+            <label for="nama">Nama Pemain</label>
+            <input class="border" type="text" name="nama" id="nama" required />
+          </div>
+
+          <div class="grid grid-cols-2 w-fit">
+            <label for="nomor">Nomor Punggung</label>
+            <input
+              class="border"
+              type="number"
+              name="nomor"
+              id="nomor"
+              required
+            />
+          </div>
+
+          <div class="grid grid-cols-2 w-fit">
+            <label for="email">Email</label>
+            <input
+              class="border"
+              type="email"
+              name="email"
+              id="email"
+              required
+            />
+          </div>
+
+          <div class="grid grid-cols-2 w-fit">
+            <label for="kota">Klub</label>
+            <input class="border" type="text" name="kota" id="kota" required />
+          </div>
+
+          <button class="border bg-black text-white rounded-md px-3 py-1">
+            Simpan
+          </button>
+        </form>
+
+        <ul id="daftar-kontak"></ul>
+      </div>
     </main>
 
     <script src="/assets/scripts/script.js"></script>
